@@ -15,18 +15,23 @@
   <body
     style="
       background: url('https://wallpaperaccess.com/full/2014298.jpg');
+      background-size: cover;
       margin: 0;
+      overflow-x: hidden;
     "
   >
     <div
       style="
-        background-color: #ecd53c;
+        background-color: #ecd43cd7;
         height: 100vh;
         width: 100vw;
-        opacity: 0.9;
+        padding-bottom: 50px;
+        /* opacity: 0.9; */
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-content: center;
+        flex-direction: column;
+        overflow-y: scroll;
       "
     >
       <div style="margin-top: 100px" class="container-md text-center">
@@ -39,15 +44,60 @@
         >
           Search For Your Favorite Hero Or Villain
         </h1>
-        <form class="d-flex">
+        <form class="d-flex" method="POST">
+          {% csrf_token %}
+
           <input
             class="form-control me-2"
-            type="search"
+            type="text"
+            name="data"
             placeholder="Search"
-            aria-label="Search"
+            value=""
           />
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
+      </div>
+      <div
+        class="container-lg"
+        style="
+          display: flex;
+          margin-top: 100px;
+          flex-wrap: wrap;
+          justify-content: space-evenly;
+        "
+      >
+        {%if res.response == 'error'%}
+        <h1>Character Not Found</h1>
+        {%else%} {%for result in res.results%}
+
+        <div class="card mb-5" style="width: 18rem">
+          <img
+            src="{{result.image.url}}"
+            class="card-img-top"
+            alt="Character Image"
+          />
+
+          <div class="card-body">
+            <h5 class="card-title"><strong> {{result.name}}</strong></h5>
+            <br />
+            <h6 class="card-subtitle">
+              Publisher: {{result.biography.publisher}}
+            </h6>
+            <h6 class="card-subtitle">Gender: {{result.appearance.gender}}</h6>
+            <br />
+            <h6>Height:</h6>
+            {%for x in result.appearance.height %}
+            <h6 class="card-subtitle">{{x}}</h6>
+
+            {%endfor%}
+            <br />
+            <p class="card-text">
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </p>
+          </div>
+        </div>
+        {%endfor%} {%endif%}
       </div>
     </div>
     <script
