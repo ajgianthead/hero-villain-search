@@ -78,23 +78,27 @@
           />
 
           <div class="card-body">
-            <h5 class="card-title"><strong> {{result.name}}</strong></h5>
+            <h4 class="card-title"><strong> {{result.name}}</strong></h4>
             <br />
-            <h6 class="card-subtitle">
-              Publisher: {{result.biography.publisher}}
-            </h6>
-            <h6 class="card-subtitle">Gender: {{result.appearance.gender}}</h6>
+            <h5 class="card-subtitle">
+              <strong>Publisher: </strong>
+              <span><h6>{{result.biography.publisher}}</h6></span>
+            </h5>
+            <h5 class="card-subtitle">
+              <strong>Gender: </strong
+              ><span><h6>{{result.appearance.gender}}</h6></span>
+            </h5>
             <br />
-            <h6>Height:</h6>
+            <h5><strong>Height:</strong></h5>
             {%for x in result.appearance.height %}
             <h6 class="card-subtitle">{{x}}</h6>
 
             {%endfor%}
             <br />
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
+            <h5><strong>Aliases:</strong></h5>
+            {%for a in result.biography.aliases%}
+            <p class="card-text">{{a}}</p>
+            {%endfor%}
           </div>
         </div>
         {%endfor%} {%endif%}
